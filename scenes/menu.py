@@ -5,7 +5,7 @@ from engine.assest_manger import ResourceManager, resource_path
 resources = ResourceManager(
     asset_path=resource_path("assets.dat"),
     encrypted=True,
-    key=b"your-secret-key"  # Must match the one used in encrypt_assets.py
+    key=b"secret_key"  # Must match the one used in encrypt_assets.py
 )
 
 class MenuScene:
