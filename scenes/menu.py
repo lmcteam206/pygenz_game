@@ -1,53 +1,55 @@
 import pygame
-from engine.data_manger import GameDB
-from engine.sound_manger import SoundManager
+from engine.assest_manger import ResourceManager, resource_path
 
+# === Init pygame ===
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Encrypted Asset Scene")
+
+# === Load Encrypted Assets ===
+resources = ResourceManager(
+    asset_path=resource_path("assets.dat"),
+    encrypted=True,
+    key=b"your-secret-key"  # Must match the one used in encrypt_assets.py
+)
+
+# === Load assets ===
+bg = resources.get_image("backgrounds/menu.png")
+font = resources.get_font("fonts/arcade.ttf", 36)
+sound = resources.get_sound("sfx/jump.wav")
+
+# === Scene class ===
 class Scene:
     def __init__(self):
-        self.db = GameDB("game.save", encrypt=False)
+        self.message = font.render("Encrypted Assets Loaded!", True, (255, 255, 255))
+        self.played = False
 
-        # Initialize only if it's a fresh file
-        if self.db.get("Player", "inventory") is None:
-            self.db.set("Player", "inventory", ["sword", "potion"])
-            self.db.set("Player", "hp", 100)
-            self.db.save()
+    def update(self, dt):
+        pass
 
-        self.font = pygame.font.SysFont("consolas", 24)
-        self.message = "Press S to save, A to add item, D to damage player"
+    def draw(self, surface):
+        surface.blit(bg, (0, 0))
+        surface.blit(self.message, (200, 250))
 
-    def handle_events(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_s:
-                self.db.save()
-                self.message = "Saved!"
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN and not self.played:
+            sound.play()
+            self.played = True
 
-            elif event.key == pygame.K_a:
-                inv = self.db.get("Player", "inventory", [])
-                inv.append("item_" + str(len(inv) + 1))
-                self.db.set("Player", "inventory", inv)
-                self.message = f"Added item_{len(inv)}"
+# === Game loop ===
+scene = Scene()
+clock = pygame.time.Clock()
+running = True
 
-            elif event.key == pygame.K_d:
-                hp = self.db.get("Player", "hp", 100)
-                hp = max(hp - 10, 0)
-                self.db.set("Player", "hp", hp)
-                self.message = "Took damage!"
+while running:
+    dt = clock.tick(60) / 1000  # delta time in seconds
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        scene.handle_event(event)
 
-    def update(self, keys, dt):
-        pass  # Add animation logic if needed
+    scene.update(dt)
+    scene.draw(screen)
+    pygame.display.flip()
 
-    def draw(self, screen):
-        screen.fill((25, 25, 30))
-        y = 40
-
-        inventory = self.db.get("Player", "inventory", [])
-        hp = self.db.get("Player", "hp", 0)
-
-        screen.blit(self.font.render("Inventory:", True, (255, 255, 255)), (20, y))
-        y += 30
-        for item in inventory:
-            screen.blit(self.font.render(f"- {item}", True, (180, 220, 255)), (40, y))
-            y += 25
-
-        screen.blit(self.font.render(f"HP: {hp}", True, (255, 150, 150)), (20, y + 20))
-        screen.blit(self.font.render(self.message, True, (100, 255, 100)), (20, y + 60))
+pygame.quit()
