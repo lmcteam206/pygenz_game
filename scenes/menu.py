@@ -1,5 +1,6 @@
 import pygame
 from engine.data_manger import GameDB
+from engine.sound_manger import SoundManager
 
 class Scene:
     def __init__(self):
