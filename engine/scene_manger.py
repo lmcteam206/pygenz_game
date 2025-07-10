@@ -23,9 +23,9 @@ class Scene_Manger:
         if self.current_scene:
             self.current_scene.handle_events(event)
 
-    def update_scenes(self, keys,dt):
+    def update_scenes(self, keys, dt):
         if self.current_scene:
-            self.current_scene.update(keys=keys,dt=dt)
+            self.current_scene.update(keys=keys, dt=dt)
 
     def draw_scenes(self, screen):
         if self.current_scene:
@@ -36,4 +36,3 @@ class Scene_Manger:
         scene_class = type(self.scenes[name])
         self.scenes[name] = scene_class()  # Recreate
         self.set_current_scene(name)
-            

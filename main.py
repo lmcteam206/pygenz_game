@@ -12,7 +12,7 @@ clock = pygame.time.Clock()
 scenes = {
     "menu": MenuScene(),
 }
-
+[]
 Smanger = Scene_Manger(scenes)
 
 running = True
