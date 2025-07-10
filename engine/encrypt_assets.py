@@ -7,7 +7,7 @@ from hashlib import sha256
 
 ASSETS_FOLDER = "assets"
 OUTPUT_FILE = "assets.dat"
-KEY = b"secret_key"  # Change this!
+KEY = b"badass"  # Change this!
 KEY = sha256(KEY).digest()  # Make it exactly 32 bytes (AES-256)
 
 def create_zip_bytes(folder):

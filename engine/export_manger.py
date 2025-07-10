@@ -9,7 +9,7 @@ from Crypto.Util.Padding import pad
 ENTRY_SCRIPT = "main.py"
 ASSET_FOLDER = "assets"
 ASSET_OUTPUT = "assets.dat"
-SECRET_KEY = b"your-secret-key"
+SECRET_KEY = b"badass"
 EXE_NAME = "game"
 
 def encrypt_assets(folder, output_file, key):
