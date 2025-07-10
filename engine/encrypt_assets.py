@@ -26,10 +26,8 @@ def encrypt_data(data, key):
     encrypted = cipher.encrypt(pad(data, AES.block_size))
     return bytes(cipher.iv) + encrypted
 
-
-if __name__ == "__main__":
-    zip_data = create_zip_bytes(ASSETS_FOLDER)
-    encrypted = encrypt_data(zip_data, KEY)
-    with open(OUTPUT_FILE, "wb") as f:
-        f.write(encrypted)
-    print(f"✅ Encrypted asset file written to {OUTPUT_FILE}")
+zip_data = create_zip_bytes(ASSETS_FOLDER)
+encrypted = encrypt_data(zip_data, KEY)
+with open(OUTPUT_FILE, "wb") as f:
+    f.write(encrypted)
+print(f"✅ Encrypted asset file written to {OUTPUT_FILE}")
