@@ -1,6 +1,6 @@
 import pygame
 from engine.scene_manger import Scene_Manger
-from scenes.menu import MenuScene
+from scenes.menu import Scene
 
 pygame.init()
 pygame.display.set_caption("Game")
@@ -10,9 +10,9 @@ clock = pygame.time.Clock()
 
 # ✅ Use a dictionary of named scenes
 scenes = {
-    "menu": MenuScene(),
+    "menu": Scene(),
 }
-[]
+
 Smanger = Scene_Manger(scenes)
 
 running = True
