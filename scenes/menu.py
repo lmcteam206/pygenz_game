@@ -19,7 +19,8 @@ class MenuScene:
         print("Handling events")
 
     def update(self, keys, dt):
-        print("Updating with keys", keys)
+        if keys[pygame.K_SPACE]:
+            print('hello')
 
     def draw(self, screen):
         screen.blit(self.bg, (0, 0))  # actually draw something
