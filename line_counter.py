@@ -73,7 +73,8 @@ EXTENSION_TO_LANGUAGE = {
 
 
 def is_valid_file(filename):
-    return any(filename.endswith(ext) for ext in EXTENSION_TO_LANGUAGE)
+    if  filename != "line_counter.py":
+        return any(filename.endswith(ext) for ext in EXTENSION_TO_LANGUAGE) 
 
 
 def analyze_file(filepath):
