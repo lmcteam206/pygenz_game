@@ -1,33 +1,9 @@
-import pygame
-from engine.scene_manger import Scene_Manger
+from engine.asset_packer import SimpleAssetPacker
+from engine.main_engine import GameEngine 
 from scenes.menu import MenuScene
 
-pygame.init()
-pygame.display.set_caption("Game")
 
-screen = pygame.display.set_mode((1000, 800))
-clock = pygame.time.Clock()
-
-scenes = {
-    "menu": MenuScene(),
-}
-
-Smanger = Scene_Manger(scenes)
-
-running = True
-while running:
-    dt = clock.tick(60) / 1000.0
-    keys = pygame.key.get_pressed()
-    screen.fill((255, 255, 255))
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        Smanger.handle_scenes_events(event)
-
-    Smanger.update_scenes(keys, dt)
-    Smanger.draw_scenes(screen)
-
-    pygame.display.flip()
-
-pygame.quit()
+game_engine = GameEngine("nigga", (1000, 800), (255, 255, 6))
+scenes = {"menu": MenuScene()}
+game_engine.init(scenes)
+game_engine.Run_Engine()
