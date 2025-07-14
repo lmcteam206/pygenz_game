@@ -8,6 +8,7 @@
 import pygame
 import os
 
+
 class SoundManager:
     def __init__(self, sound_folder="assets/"):
         """
@@ -16,10 +17,10 @@ class SoundManager:
         """
         pygame.mixer.init()
         self.sound_folder = sound_folder  # Base folder to load sounds/music from
-        self.sounds = {}                  # Dictionary to store sound effects by name
-        self.music_volume = 1.0           # Volume for background music (0.0 to 1.0)
-        self.sfx_volume = 1.0             # Volume for sound effects (0.0 to 1.0)
-        self.muted = False                # Global mute toggle
+        self.sounds = {}  # Dictionary to store sound effects by name
+        self.music_volume = 1.0  # Volume for background music (0.0 to 1.0)
+        self.sfx_volume = 1.0  # Volume for sound effects (0.0 to 1.0)
+        self.muted = False  # Global mute toggle
 
     def load(self, name, filename):
         """

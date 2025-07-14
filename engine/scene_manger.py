@@ -3,6 +3,7 @@
 # Scene_Manger handles switching between different game scenes (like Menu, Game, Pause).
 # Each scene is expected to implement: handle_events(), update(keys, dt), and draw(screen).
 
+
 class Scene_Manger:
     def __init__(self, scenes_dict=None):
         if scenes_dict is None:

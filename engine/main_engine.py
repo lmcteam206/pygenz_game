@@ -1,9 +1,7 @@
-
 import os
 import sys
 import pygame
 from engine.scene_manger import Scene_Manger
-
 
 
 def silent_pygame_init():
@@ -18,13 +16,10 @@ def silent_pygame_init():
         sys.stdout = original_stdout  # Restore original stdout
 
 
-
 class GameEngine:
     def __init__(
         self, game_name="none", window_size=(100, 800), defualt_bgcolor=(255, 255, 255)
     ):
-        
-        
         silent_pygame_init()
         self.game_name = game_name
         self.window_size = window_size
@@ -53,7 +48,6 @@ class GameEngine:
 
     def Set_Window_Size(self, size):
         self.screen = pygame.display.set_mode(size)
-
 
     def Run_Engine(self):
         while self.running:

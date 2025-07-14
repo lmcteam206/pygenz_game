@@ -14,18 +14,21 @@ from cryptography.fernet import Fernet
 # Path to the encryption key file
 KEY_PATH = "secret.key"
 
+
 # Function to retrieve the encryption key, or create one if it doesn't exist
 def get_key():
     if not os.path.exists(KEY_PATH):
         key = Fernet.generate_key()
-        with open(KEY_PATH, 'wb') as f:
+        with open(KEY_PATH, "wb") as f:
             f.write(key)
         return key
-    with open(KEY_PATH, 'rb') as f:
+    with open(KEY_PATH, "rb") as f:
         return f.read()
+
 
 # Global cipher object used for encryption/decryption
 CIPHER = Fernet(get_key())
+
 
 # Serialize a dictionary into a custom text format
 def _serialize(data: dict) -> str:
@@ -33,9 +36,12 @@ def _serialize(data: dict) -> str:
     for section, section_data in data.items():
         lines.append(f"[{section}]")  # Section header
         for key, value in section_data.items():
-            lines.append(f"{key} = {repr(value)}")  # Save key-value pairs with Python repr()
+            lines.append(
+                f"{key} = {repr(value)}"
+            )  # Save key-value pairs with Python repr()
         lines.append("")  # Blank line between sections
     return "\n".join(lines)
+
 
 # Deserialize text back into a nested dictionary
 def _deserialize(raw: str) -> dict:
@@ -58,12 +64,13 @@ def _deserialize(raw: str) -> dict:
                 db[current_section][key.strip()] = val.strip()
     return db
 
+
 # GameDB is the main class to load, access, modify, and save game data
 class GameDB:
     def __init__(self, path: str, encrypt: bool = False):
-        self.path = path           # Path to the save file
-        self.encrypt = encrypt     # Whether to use encryption
-        self.data = {}             # Internal dictionary to hold the game data
+        self.path = path  # Path to the save file
+        self.encrypt = encrypt  # Whether to use encryption
+        self.data = {}  # Internal dictionary to hold the game data
 
         # Auto-load the file if it already exists
         if os.path.exists(path):
@@ -71,7 +78,7 @@ class GameDB:
 
     # Load the file from disk, and decrypt if needed
     def load(self):
-        with open(self.path, 'rb') as f:
+        with open(self.path, "rb") as f:
             head = f.readline()
             if head == b"ENCRYPTED\n":
                 # File is encrypted: decrypt content
@@ -86,11 +93,11 @@ class GameDB:
     def save(self):
         text = _serialize(self.data)
         if self.encrypt:
-            with open(self.path, 'wb') as f:
+            with open(self.path, "wb") as f:
                 f.write(b"ENCRYPTED\n")  # Header to identify encrypted files
                 f.write(CIPHER.encrypt(text.encode()))
         else:
-            with open(self.path, 'w') as f:
+            with open(self.path, "w") as f:
                 f.write(text)
 
     # Get a value from the data safely

@@ -3,6 +3,7 @@
 import os
 from datetime import datetime
 
+
 class P_Debug:
     def __init__(self, log_dir="debug_logs"):
         self.log_dir = log_dir

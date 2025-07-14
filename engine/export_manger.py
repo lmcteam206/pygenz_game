@@ -12,6 +12,7 @@ ASSET_OUTPUT = "assets.dat"
 SECRET_KEY = b"badass"
 EXE_NAME = "game"
 
+
 def encrypt_assets(folder, output_file, key):
     import io
     import zipfile
@@ -35,6 +36,7 @@ def encrypt_assets(folder, output_file, key):
 
     print(f"✅ Encrypted assets saved to {output_file}")
 
+
 def build_exe():
     print("🛠️ Building EXE with PyInstaller...")
     if os.path.exists("build"):
@@ -42,15 +44,19 @@ def build_exe():
     if os.path.exists("dist"):
         shutil.rmtree("dist")
 
-    subprocess.run([
-        "pyinstaller",
-        "--onefile",
-        "--noconsole",  # Remove this if you want the console window
-        f"--name={EXE_NAME}",
-        f"--add-data={ASSET_OUTPUT};.",
-        ENTRY_SCRIPT
-    ], check=True)
+    subprocess.run(
+        [
+            "pyinstaller",
+            "--onefile",
+            "--noconsole",  # Remove this if you want the console window
+            f"--name={EXE_NAME}",
+            f"--add-data={ASSET_OUTPUT};.",
+            ENTRY_SCRIPT,
+        ],
+        check=True,
+    )
     print(f"✅ Build complete. Output: dist/{EXE_NAME}.exe")
+
 
 if __name__ == "__main__":
     encrypt_assets(ASSET_FOLDER, ASSET_OUTPUT, SECRET_KEY)
