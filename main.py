@@ -1,4 +1,4 @@
-from engine.asset_packer import SimpleAssetPacker
+from engine.asset_packer import SimpleAssetPacker  # noqa: F401
 from engine.main_engine import GameEngine 
 from scenes.menu import MenuScene
 

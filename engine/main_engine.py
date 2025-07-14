@@ -5,6 +5,7 @@ import pygame
 from engine.scene_manger import Scene_Manger
 
 
+
 def silent_pygame_init():
     # Save original stdout
     original_stdout = sys.stdout

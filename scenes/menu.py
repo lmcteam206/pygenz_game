@@ -1,22 +1,24 @@
+# main.py
 import pygame
-from engine.global_resourses import resources
+from engine.personal_debug import P_Debug
+from engine.input_manger import InputManager
+
+debugger = P_Debug()
 
 class MenuScene:
     def __init__(self):
-        self.played = False
-        self.bg = resources.get_image("bg.png")
-        print("Assets in pack:")
-        for asset_name in resources.list_assets():
-            print("-", asset_name)
+        self.inputter = InputManager()
 
     def handle_events(self, event):
-        if event.type == pygame.KEYDOWN and not self.played:
-            self.played = True
-        
+        self.inputter.handle_event(event)
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            print("ESC pressed!")
 
     def update(self, keys, dt):
-        if keys[pygame.K_SPACE]:
-            print('hello')
+        self.inputter.update()
+        if self.inputter.is_action_pressed("jump"):
+            debugger.add_to_slot(1, "space pressed")
 
     def draw(self, screen):
-        screen.blit(self.bg, (0, 0))  # actually draw something
+        screen.fill((0, 0, 0))
+
